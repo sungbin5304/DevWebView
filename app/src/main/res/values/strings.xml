@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">DevWebView</string>
+
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+    <string name="main_address_preview">google.com</string>
+    <string name="main_input_address">주소 입력</string>
+
+    <string name="menu_go">이동</string>
+    <string name="menu_more">더보기</string>
 </resources>
