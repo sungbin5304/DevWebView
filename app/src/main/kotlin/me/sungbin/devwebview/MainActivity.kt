@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebChromeClient
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
         ActionBarDrawerToggle(this, dl_drawer, toolbar, R.string.open, R.string.close).run {
             syncState()
@@ -52,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        val moreView = menu.findItem(R.id.action_more)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.run {
             maxWidth = Integer.MAX_VALUE
@@ -61,23 +62,26 @@ class MainActivity : AppCompatActivity() {
             setIconifiedByDefault(true)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(string: String?): Boolean {
-                    if (!string.isNullOrBlank()) webview.loadUrl(string)
-                    return false
+                    if (!string.isNullOrBlank()) webview.loadUrl(string); Log.w("AAAA", "LOAD URL")
+                    Log.w("AAAA", "Query Text Submit")
+                    return true
                 }
 
                 override fun onQueryTextChange(str: String?): Boolean {
-                    return false
+                    Log.w("AAAA", str.toString())
+                    return true
                 }
 
             })
-            return true
         }
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.w("AAAA", "Clicked Item ID: ${item.itemId}")
         when (item.itemId) {
             R.id.action_more -> {
-                val popup = PopupMenu(applicationContext, item.actionView)
+                val popup = PopupMenu(applicationContext, findViewById(R.id.action_more))
                 menuInflater.inflate(R.menu.menu_more, popup.menu)
                 popup.setOnMenuItemClickListener {
                     when (it.itemId) {
@@ -92,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.action_dev -> webview.loadUrl("javascript:var script = document.createElement('script'); script.src=\"//cdn.jsdelivr.net/npm/eruda\"; document.body.appendChild(script); script.onload = function () { eruda.init() };")
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun onBackPressed() {
