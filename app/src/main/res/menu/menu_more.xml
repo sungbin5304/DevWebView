@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_forward"
+        android:title="@string/menu_forward" />
+
+    <item
+        android:id="@+id/action_option"
+        android:title="@string/menu_option" />
+
+</menu>

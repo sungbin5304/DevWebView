@@ -1,7 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sungbin.com.xvideo.activity.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/action_search"
@@ -10,6 +9,12 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/action_dev"
+        android:icon="@drawable/ic_baseline_developer_mode_24"
+        android:title="@string/menu_dev"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_more"

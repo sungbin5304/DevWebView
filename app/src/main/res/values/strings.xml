@@ -9,4 +9,7 @@
 
     <string name="menu_go">이동</string>
     <string name="menu_more">더보기</string>
+    <string name="menu_forward">앞 페이지로 이동</string>
+    <string name="menu_option">설정</string>
+    <string name="menu_dev">개발자도구</string>
 </resources>

@@ -5,9 +5,11 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebViewClient
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -44,17 +46,13 @@ class MainActivity : AppCompatActivity() {
             webChromeClient = WebChromeClient()
             webViewClient = WebViewClient()
         }
-
-        /*val btn = findViewById<View>(R.id.btn) as Button
-        btn.setOnClickListener { mWebView!!.loadUrl(edtUrl.text.toString()) }
-        val btn2 = findViewById<View>(R.id.btn2) as Button
-        btn2.setOnClickListener { mWebView!!.loadUrl("javascript:var script = document.createElement('script'); script.src=\"//cdn.jsdelivr.net/npm/eruda\"; document.body.appendChild(script); script.onload = function () { eruda.init() };") }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        val moreView = menu.findItem(R.id.action_more)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.run {
             maxWidth = Integer.MAX_VALUE
@@ -74,6 +72,27 @@ class MainActivity : AppCompatActivity() {
             })
             return true
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_more -> {
+                val popup = PopupMenu(applicationContext, item.actionView)
+                menuInflater.inflate(R.menu.menu_more, popup.menu)
+                popup.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.action_forward -> {
+                            if (webview.canGoForward()) webview.goForward()
+                        }
+                        R.id.action_option -> Unit
+                    }
+                    true
+                }
+                popup.show()
+            }
+            R.id.action_dev -> webview.loadUrl("javascript:var script = document.createElement('script'); script.src=\"//cdn.jsdelivr.net/npm/eruda\"; document.body.appendChild(script); script.onload = function () { eruda.init() };")
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
