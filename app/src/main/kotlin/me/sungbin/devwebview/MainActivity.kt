@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebChromeClient
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             syncState()
         }
 
-        nv_navigation.getHeaderView(0).findViewById<TextView>(R.id.tv_title).text = "AAAAAAA"
+        nv_navigation.getHeaderView(0).findViewById<TextView>(R.id.tv_title).text = "암것도 없음 ㅅㄱ"
 
         webview.run {
             webViewClient = WebViewClient()
@@ -44,9 +43,9 @@ class MainActivity : AppCompatActivity() {
                 setSupportMultipleWindows(false)
                 setSupportZoom(true)
             }
-            loadUrl("https://google.com")
             webChromeClient = WebChromeClient()
             webViewClient = WebViewClient()
+            loadUrl("https://cafe.naver.com/nameyee")
         }
     }
 
@@ -62,23 +61,19 @@ class MainActivity : AppCompatActivity() {
             setIconifiedByDefault(true)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(string: String?): Boolean {
-                    if (!string.isNullOrBlank()) webview.loadUrl(string); Log.w("AAAA", "LOAD URL")
-                    Log.w("AAAA", "Query Text Submit")
+                    if (!string.isNullOrBlank()) {
+                        webview.loadUrl(if (string.contains("http")) string else "http://$string")
+                    }
                     return true
                 }
 
-                override fun onQueryTextChange(str: String?): Boolean {
-                    Log.w("AAAA", str.toString())
-                    return true
-                }
-
+                override fun onQueryTextChange(str: String?) = true
             })
         }
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Log.w("AAAA", "Clicked Item ID: ${item.itemId}")
         when (item.itemId) {
             R.id.action_more -> {
                 val popup = PopupMenu(applicationContext, findViewById(R.id.action_more))
